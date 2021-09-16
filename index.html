@@ -81,32 +81,23 @@
         <!-- Optional JavaScript; choose one of the two! -->
         <script>
 
-        
-var fs = require("firebase-admin");
-const db = fs.firestore();
+function payWithPaystack() {
 
-
-        function payWithPaystack() {
-    
-          let handler = PaystackPop.setup({
-            key: 'pk_test_a7656f77752f54a453efa4852c31f78ece6a3808', // Replace with your public key
-            email: document.getElementById("email-address").value,
-            amount: document.getElementById("amount").value * 100,
-            currency: 'GHS',
-            // label: "Optional string that replaces customer email"
-            onClose: function(){
-              alert('Window closed.');
-            },
-            callback: function(response){
-                const params = new URLSearchParams(window.location.search)
-              alert('success. transaction ref is ' + response.reference);
-             await  db.collection("trips").doc(params.get('test')).set({
-              "payment": "true"
-                });
-            }
-          });
-          handler.openIframe();
-        }
+let handler = PaystackPop.setup({
+  key: 'pk_test_a7656f77752f54a453efa4852c31f78ece6a3808', // Replace with your public key
+  email: document.getElementById("email-address").value,
+  amount: document.getElementById("amount").value * 100,
+  currency: 'GHS',
+  // label: "Optional string that replaces customer email"
+  onClose: function(){
+    alert('Window closed.');
+  },
+  callback: function(response){
+    alert('success. transaction ref is ' + response.reference);
+  }
+});
+handler.openIframe();
+}
     
         </script>
         <!-- Option 1: Bootstrap Bundle with Popper -->
